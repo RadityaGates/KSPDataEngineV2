@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/scrape",
+      "schedule": "0 17 * * *"
+    }
+  ],
+  "functions": {
+    "app/api/scrape/route.js": {
+      "maxDuration": 20
+    },
+    "app/api/update-sheet/route.js": {
+      "maxDuration": 20
+    }
+  }
+}
