@@ -22,7 +22,7 @@ export async function POST(request) {
 
     const body = await request.json().catch(() => ({}));
     // Optimized for 10-second timeout: quick retries
-    const { runId, maxRetries = 2, retryDelay = 3000 } = body;
+    const { runId, maxRetries = 3, retryDelay = 2000 } = body; // 2 seconds instead of 3
     const username = "kantorstafpresidenri";
 
     let currentRunId = runId;
@@ -137,6 +137,9 @@ export async function POST(request) {
         if (attempts < maxRetries) {
           console.log(`Run still ${result.status}, waiting ${retryDelay}ms before retry...`);
           await new Promise(resolve => setTimeout(resolve, retryDelay));
+        } else {
+          // Last attempt - don't wait, exit immediately
+          console.log(`Last attempt reached, exiting without wait`);
         }
       }
     }
